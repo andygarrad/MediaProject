@@ -66,6 +66,10 @@ a:hover {
     color: #00FFFF;
     vertical-align: bottom;
 }
+#alert_placeholder{
+    font-size: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
 .right {
     float: right;
 }

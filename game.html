@@ -79,9 +79,11 @@
 			<button id="start_button" onclick="startButton(event)">
 				<img id="start_img" src="mic.gif" alt="Start"></button>
 		</div>
+		<div id="alert_placeholder">
 
+		</div>
 		<div id="outer">
-			<h1> Please say what you see</h1>
+			<h1 id="guide" style="display: none;"> Please say what you see</h1>
 			<div class="images" id="question" style="text-align: center;">
 
 			</div>
@@ -250,11 +252,11 @@
 				}
 				if(final_transcript.indexOf(""+parseInt(num+num2))!=-1 && final_transcript.indexOf(""+answer) !=-1)
 				{
-					alert("correct, well done!, the answer was "+parseInt(num));
+					showalert("<strong>Correct!</strong> Well done the correct answer was indeed "+ (num+num2) +" "+answer+".", "alert-success");
 				}
 				else
 				{
-					alert("wrong answer, better luck next time! " +parseInt(num));
+					showalert("<strong>Wrong!</strong> Sorry unfortunately the correct answer was "+ (num+num2) +" "+answer+".", "alert-danger");
 				}};
 			recognition.onresult = function(event) {
 				var interim_transcript = '';
@@ -303,6 +305,16 @@
 			copy_info.style.display = 'inline-block';
 			showInfo('');
 		}
+
+		function showalert(message,alerttype) {
+
+			$('#alert_placeholder').append('<div id="alertdiv" class="alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+
+			setTimeout(function() { // this will automatically close the alert and remove this if the users doesnt close it in 5 secs
+				$("#alertdiv").remove();
+			}, 5000);
+		}
+
 		function loadImage(path, width, height, target) {
 			$('<img src="'+ path +'">').load(function() {
 				$(this).width(width).height(height).appendTo(target);
@@ -325,6 +337,7 @@
 			}
 		}
 		function startButton(event) {
+			document.getElementById("guide").style.display = "block";
 			num=Math.floor((Math.random() * 5) + 1);
 			num2=Math.floor((Math.random() * 5) + 1);
 			document.getElementById("question").remove();
